@@ -50,26 +50,24 @@ INSTALLED_APPS = [
    
 
 ]
-# Allow session cookie for frontend (React)
+# ===== CORS & CSRF CONFIG (FINAL) =====
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"",
+]
 
 CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGIN_REGEXES = [
+    r"^https://.*\.vercel\.app$",
+]
 
 SESSION_COOKIE_SAMESITE = "None"
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
 
 CSRF_COOKIE_SAMESITE = "None"
-CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
 
-CORS_ALLOWED_ORIGINS = [
-    # "http://localhost:5173",
-     "https://gym-project-new.vercel.app",
-    
-]
-CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = [
-    # "http://localhost:5173",
-     "https://gym-project-new.vercel.app",
-]
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG") == "True"
