@@ -1,0 +1,142 @@
+/* ================================
+   AUTH PAGES – LOGIN / REGISTER
+   ================================ */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #141e30, #243b55);
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* card */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px 28px;
+  border-radius: 14px;
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.35);
+  animation: slideUp 0.7s ease;
+}
+
+/* title */
+.auth-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  font-size: 26px;
+}
+
+/* form */
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* inputs & select */
+.auth-card input,
+.auth-card select {
+  padding: 12px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-card input:focus,
+.auth-card select:focus {
+  outline: none;
+  border-color: #1e88e5;
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.25);
+}
+
+/* select */
+.auth-card select {
+  background: #fff;
+  cursor: pointer;
+}
+
+/* button */
+.auth-card button {
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #1e88e5, #1565c0);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(30, 136, 229, 0.45);
+}
+
+.auth-card button:active {
+  transform: translateY(0);
+}
+
+/* error text */
+.auth-card p {
+  text-align: center;
+}
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 25px 20px;
+  }
+
+  .auth-card h2 {
+    font-size: 22px;
+  }
+}
+
+/* ================================
+   ANIMATIONS
+   ================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(35px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.spinner {
+  width: 32px;
+  height: 32px;
+  margin: 12px auto 0;
+  border: 4px solid #ddd;
+  border-top: 4px solid #1d2671;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

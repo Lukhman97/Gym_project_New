@@ -1,0 +1,94 @@
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #141e30, #243b55);
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* layout below navbar */
+.main-content {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* right content */
+.page-content {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25);
+  animation: slideUp 0.7s ease;
+}
+
+/* heading */
+.page-content h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.page-content p {
+  font-size: 16px;
+  color: #555;
+}
+
+/* footer */
+.footer {
+  text-align: center;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  font-size: 14px;
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+   ================================ */
+
+@media (max-width: 900px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .page-content {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .page-content h2 {
+    font-size: 22px;
+  }
+
+  .page-content p {
+    font-size: 14px;
+  }
+}
+
+/* ================================
+   ANIMATIONS
+   ================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

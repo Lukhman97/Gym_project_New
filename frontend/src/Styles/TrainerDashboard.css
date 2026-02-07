@@ -1,0 +1,215 @@
+/* Main layout */
+.trainer-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a2a3a, #2c3e50);
+  color: #ecf0f1;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.trainer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* Trainer card (existing) */
+.trainer-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  margin-bottom: 24px;
+  color: #2c3e50;
+}
+
+.trainer-card h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #2c3e50;
+}
+
+.no-users {
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+.trainer-user-list {
+  list-style: none;
+  padding: 0;
+}
+
+.trainer-user-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* Stats grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-card h4 {
+  margin: 0 0 8px 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #3498db;
+}
+
+/* Sessions card */
+.sessions-card,
+.updates-feed-card,
+.actions-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+  color: #2c3e50;
+}
+
+.sessions-card h3,
+.updates-feed-card h3,
+.actions-card h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #2c3e50;
+}
+
+.sessions-list {
+  list-style: none;
+  padding: 0;
+}
+
+.session-item {
+  display: grid;
+  grid-template-columns: 0.6fr 1fr 1fr 0.8fr;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+.session-item.status-completed {
+  opacity: 0.7;
+}
+
+.session-time,
+.session-client,
+.session-type,
+.session-status {
+  padding: 4px 0;
+}
+
+/* Updates feed */
+.updates-feed {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.update-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.update-item:last-child {
+  border-bottom: none;
+}
+
+/* Quick actions */
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.action-btn {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #3498db;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+/* Form styles (existing + small tweaks) */
+.trainer-update-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.trainer-update-form input,
+.trainer-update-form textarea {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.trainer-update-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.trainer-update-form button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #27ae60;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.trainer-update-form button:hover {
+  background: #219653;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stats-grid,
+  .actions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .session-item {
+    grid-template-columns: 1fr 1fr;
+    font-size: 0.9rem;
+  }
+
+  .session-time,
+  .session-client {
+    grid-column: span 1;
+  }
+
+  .session-type,
+  .session-status {
+    grid-column: span 1;
+  }
+}

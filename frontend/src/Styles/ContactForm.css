@@ -1,0 +1,116 @@
+/* ===== Page Layout ===== */
+.contact-page {
+  min-height: 100vh;
+  display: flex;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  padding: 40px;
+  gap: 40px;
+  color: #ffffff;
+}
+
+/* ===== LEFT SECTION ===== */
+.contact-left {
+  flex: 1;
+  padding: 40px;
+}
+
+.contact-left h1 {
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.contact-left p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.contact-info-item span {
+  font-size: 22px;
+  margin-right: 12px;
+}
+
+/* ===== RIGHT SECTION (FORM) ===== */
+.contact-right {
+  flex: 1;
+  background: #ffffff;
+  color: #333;
+  padding: 35px;
+  border-radius: 14px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+.contact-right h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c5364;
+}
+
+/* ===== Inputs ===== */
+.contact-right input,
+.contact-right textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Focus */
+.contact-right input:focus,
+.contact-right textarea:focus {
+  border-color: #2c5364;
+  box-shadow: 0 0 0 2px rgba(44, 83, 100, 0.2);
+}
+
+.contact-right textarea {
+  resize: none;
+  min-height: 110px;
+}
+
+/* ===== Button ===== */
+.contact-right button {
+  width: 100%;
+  padding: 12px;
+  background: #2c5364;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.contact-right button:hover {
+  background: #203a43;
+  transform: translateY(-1px);
+}
+
+.contact-right button:disabled {
+  background: #999;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 768px) {
+  .contact-page {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .contact-left {
+    padding: 20px;
+  }
+}
