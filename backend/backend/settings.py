@@ -34,6 +34,7 @@ import os
 
 load_dotenv()
 INSTALLED_APPS = [
+    "corsheaders",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,7 +46,7 @@ INSTALLED_APPS = [
     'accounts',
     'trainers',
     'gymadmin',
-     'corsheaders',
+    
    
 
 ]
@@ -61,13 +62,13 @@ CSRF_COOKIE_SECURE = False
 
 CORS_ALLOWED_ORIGINS = [
     # "http://localhost:5173",
-    "https://gymtracker-react.vercel.app",
+     "https://gym-project-new.vercel.app",
     
 ]
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     # "http://localhost:5173",
-    "https://gymtracker-react.vercel.app",
+     "https://gym-project-new.vercel.app",
 ]
 
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -109,33 +110,13 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-PEM_CONTENT = os.getenv("PEM_CONT")
+# PEM_CONTENT = os.getenv("PEM_CONT")
 
-CERT_PATH = os.path.join(BASE_DIR, "aiven_ca.pem")
+# CERT_PATH = os.path.join(BASE_DIR, "aiven_ca.pem")
 
-if PEM_CONTENT:
-    with open(CERT_PATH, "w") as f:
-        f.write(PEM_CONTENT)
-
-
-DATABASES={
-    'default':{
-        'ENGINE':'django.db.backends.mysql',
-        'NAME':os.getenv('DB_NAME'),
-        'USER':os.getenv('DB_USER'),
-        'PASSWORD':os.getenv('DB_PASSWORD'),
-        'HOST':os.getenv('DB_HOST'),
-        'PORT':os.getenv('DB_PORT'),
-        'OPTIONS':{
-            "ssl":{
-                "ca": os.getenv("PEM_CONTENT"),
-            },
-            'charset':'utf8mb4',
-            'init_command':"SET sql_mode='STRICT_TRANS_TABLES'",
-            
-        },
-    }
-}
+# if PEM_CONTENT:
+#     with open(CERT_PATH, "w") as f:
+#         f.write(PEM_CONTENT)
 
 
 # DATABASES={
@@ -148,7 +129,7 @@ DATABASES={
 #         'PORT':os.getenv('DB_PORT'),
 #         'OPTIONS':{
 #             "ssl":{
-#                 "ca": "/etc/secrets/aiven_ca.pem", 
+#                 "ca": os.getenv("PEM_CONTENT"),
 #             },
 #             'charset':'utf8mb4',
 #             'init_command':"SET sql_mode='STRICT_TRANS_TABLES'",
@@ -156,6 +137,26 @@ DATABASES={
 #         },
 #     }
 # }
+
+
+DATABASES={
+    'default':{
+        'ENGINE':'django.db.backends.mysql',
+        'NAME':os.getenv('DB_NAME'),
+        'USER':os.getenv('DB_USER'),
+        'PASSWORD':os.getenv('DB_PASSWORD'),
+        'HOST':os.getenv('DB_HOST'),
+        'PORT':os.getenv('DB_PORT'),
+        'OPTIONS':{
+            "ssl":{
+                "ca": "/etc/secrets/aiven_ca.pem", 
+            },
+            'charset':'utf8mb4',
+            'init_command':"SET sql_mode='STRICT_TRANS_TABLES'",
+            
+        },
+    }
+}
 
 
 
