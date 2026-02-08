@@ -6,13 +6,19 @@ const api = axios.create({
     "Content-Type": "application/json",
   },
 });
-
-// Automatically attach token
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("access");
-  if (token) {
+
+  // Do not attach token for auth endpoints
+  if (
+    token &&
+    !config.url.includes("/login") &&
+    !config.url.includes("/register") &&
+    !config.url.includes("/token")
+  ) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
   return config;
 });
 

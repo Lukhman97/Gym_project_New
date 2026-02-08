@@ -15,12 +15,13 @@ class AdminDashboardView(APIView):
     def get(self, request):
         if not request.user.is_superuser:
             return Response(
-                {"error": "Not an admin"},
+                {"detail": "Admin access required"},
                 status=status.HTTP_403_FORBIDDEN
             )
 
         return Response({
-            "admin": request.user.username
+            "admin": request.user.username,
+            "role": "admin"
         })
 
 
@@ -33,11 +34,11 @@ class AdminUsersView(APIView):
     def get(self, request):
         if not request.user.is_superuser:
             return Response(
-                {"error": "Not an admin"},
+                {"detail": "Admin access required"},
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        profiles = UserProfile.objects.select_related("user").all()
+        profiles = UserProfile.objects.select_related("user", "trainer").all()
 
         users = [
             {
@@ -45,6 +46,7 @@ class AdminUsersView(APIView):
                 "username": profile.user.username,
                 "goal": profile.goal,
                 "approved": profile.approved,
+                "trainer": profile.trainer.trainer_id if profile.trainer else None,
             }
             for profile in profiles
         ]
@@ -61,7 +63,7 @@ class ApproveUserView(APIView):
     def post(self, request):
         if not request.user.is_superuser:
             return Response(
-                {"error": "Not an admin"},
+                {"detail": "Admin access required"},
                 status=status.HTTP_403_FORBIDDEN
             )
 
@@ -69,7 +71,7 @@ class ApproveUserView(APIView):
 
         if not profile_id:
             return Response(
-                {"error": "user_id is required"},
+                {"detail": "user_id is required"},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -77,11 +79,20 @@ class ApproveUserView(APIView):
             profile = UserProfile.objects.get(id=profile_id)
         except UserProfile.DoesNotExist:
             return Response(
-                {"error": "User not found"},
+                {"detail": "User not found"},
                 status=status.HTTP_404_NOT_FOUND
+            )
+
+        if profile.approved:
+            return Response(
+                {"detail": "User already approved"},
+                status=status.HTTP_400_BAD_REQUEST
             )
 
         profile.approved = True
         profile.save()
 
-        return Response({"message": "User approved"})
+        return Response(
+            {"detail": "User approved successfully"},
+            status=status.HTTP_200_OK
+        )

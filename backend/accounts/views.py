@@ -26,7 +26,7 @@ class RegisterUserView(APIView):
 
         if not username or not password:
             return Response(
-                {"error": "Username and password required"},
+                {"error": "Username and password are required"},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -52,7 +52,7 @@ class RegisterUserView(APIView):
         )
 
         return Response(
-            {"message": "User registered successfully. Waiting for admin approval."},
+            {"message": "Registered successfully. Waiting for admin approval."},
             status=status.HTTP_201_CREATED
         )
 
@@ -72,11 +72,19 @@ class UserProfileView(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
 
+        if not profile.approved:
+            return Response(
+                {"error": "Account not approved yet"},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
         return Response({
-            "username": request.user.username,
-            "approved": profile.approved,
-            "goal": profile.goal,
-            "trainer": profile.trainer.trainer_id if profile.trainer else None
+            "user": {
+                "username": request.user.username,
+                "approved": profile.approved,
+                "goal": profile.goal,
+                "trainer": profile.trainer.trainer_id if profile.trainer else None
+            }
         })
 
 
@@ -87,7 +95,6 @@ class CreateTrainerView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        # 🔒 Admin-only
         if not request.user.is_superuser:
             return Response(
                 {"error": "Admin access required"},
@@ -100,7 +107,7 @@ class CreateTrainerView(APIView):
 
         if not username or not password or not trainer_id:
             return Response(
-                {"error": "Missing data"},
+                {"error": "All fields are required"},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -113,7 +120,6 @@ class CreateTrainerView(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        # reset password
         user.set_password(password)
         user.save()
 
@@ -127,7 +133,7 @@ class CreateTrainerView(APIView):
         profile.save()
 
         return Response(
-            {"message": "Trainer created successfully"},
+            {"message": "Trainer created and user approved"},
             status=status.HTTP_201_CREATED
         )
 
@@ -147,7 +153,10 @@ class TrainerUsersView(APIView):
                 status=status.HTTP_403_FORBIDDEN
             )
 
-        profiles = UserProfile.objects.filter(trainer=trainer, approved=True)
+        profiles = UserProfile.objects.filter(
+            trainer=trainer,
+            approved=True
+        )
 
         users = [
             {
@@ -182,12 +191,29 @@ class AddDailyUpdateView(APIView):
         attendance = request.data.get("attendance")
         description = request.data.get("description")
 
+        if not username or date is None or attendance is None:
+            return Response(
+                {"error": "Missing required fields"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if attendance not in [True, False]:
+            return Response(
+                {"error": "Attendance must be true or false"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
         try:
             user = User.objects.get(username=username)
-        except User.DoesNotExist:
+            UserProfile.objects.get(
+                user=user,
+                trainer=trainer,
+                approved=True
+            )
+        except (User.DoesNotExist, UserProfile.DoesNotExist):
             return Response(
-                {"error": "User not found"},
-                status=status.HTTP_404_NOT_FOUND
+                {"error": "User not assigned to you"},
+                status=status.HTTP_403_FORBIDDEN
             )
 
         DailyUpdate.objects.create(
@@ -200,7 +226,7 @@ class AddDailyUpdateView(APIView):
         )
 
         return Response(
-            {"message": "Daily update added"},
+            {"message": "Daily update added successfully"},
             status=status.HTTP_201_CREATED
         )
 
